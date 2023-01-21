@@ -73,3 +73,34 @@ redis-cli MONITOR
 
 https://redis.io/docs/manual/pubsub/
 
+
+
+
+celery -A tasks worker --loglevel=INFO
+
+from tasks import add
+
+r = add.delay(4,3)
+
+>> r.ready()
+True
+>>> r.get(propagate=False)
+7
+>>> r.traceback
+>>> r.get()
+7
+>>> r.get(timeout=1)
+7
+
+
+
+# Celery
+
+celery worker --help
+
+celery -A proj worker -l INFO   << in enclosing dir
+
+
+pip install flower
+celery -A proj flower
+http://localhost:5555
